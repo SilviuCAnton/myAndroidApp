@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">MyAndroidApp</string>
+    <string name="app_name">BugReportingApp</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
+
+    <string name="bug_list_fragment_label">Bug List</string>
+    <string name="bug_edit_fragment_label">Bug Edit</string>
+
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -9,4 +13,12 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title">Title:</string>
+    <string name="description">Description:</string>
+    <string name="reportedDate">Reported Date:</string>
+    <string name="solved">Solved:</string>
+    <string name="severity">Severity:</string>
+    <string name="bugs">Bugs</string>
+    <string name="delete">Delete</string>
+    <string name="savebutton">saveButton</string>
 </resources>
