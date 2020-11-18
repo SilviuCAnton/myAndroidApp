@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.silviucanton.myandroidapp.bugs.data.Bug
 import com.silviucanton.myandroidapp.bugs.data.BugRepository
 import com.silviucanton.myandroidapp.bugs.data.local.BugDatabase
+import com.silviucanton.myandroidapp.core.TAG
 import kotlinx.coroutines.launch
+import com.silviucanton.myandroidapp.core.Result
 
 class BugListViewModel(application: Application) : AndroidViewModel(application) {
     private val mutableLoading = MutableLiveData<Boolean>().apply { value = false }
@@ -19,7 +21,7 @@ class BugListViewModel(application: Application) : AndroidViewModel(application)
     val loading: LiveData<Boolean> = mutableLoading
     val loadingError: LiveData<Exception> = mutableException
 
-    val bugRepository: BugRepository
+    private val bugRepository: BugRepository
 
     init {
         val bugDao = BugDatabase.getDatabase(application, viewModelScope).bugDao()
@@ -29,14 +31,17 @@ class BugListViewModel(application: Application) : AndroidViewModel(application)
 
     fun refresh() {
         viewModelScope.launch {
-            Log.v(javaClass.name, "refresh...");
+            Log.v(TAG, "refresh...");
             mutableLoading.value = true
             mutableException.value = null
-            try {
-                bugRepository.refresh()
-            } catch(e: Exception) {
-                Log.e(javaClass.name,e.toString())
-                mutableException.value = e
+            when (val result = bugRepository.refresh()) {
+                is Result.Success -> {
+                    Log.d(TAG, "refresh succeeded");
+                }
+                is Result.Error -> {
+                    Log.w(TAG, "refresh failed", result.exception);
+                    mutableException.value = result.exception
+                }
             }
             mutableLoading.value = false
         }

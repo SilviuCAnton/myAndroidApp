@@ -12,6 +12,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.silviucanton.myandroidapp.R
 import com.silviucanton.myandroidapp.bugs.data.Bug
+import com.silviucanton.myandroidapp.core.TAG
 import kotlinx.android.synthetic.main.fragment_bug_edit.*
 import java.time.LocalDate
 import java.util.*
@@ -27,29 +28,30 @@ class BugEditFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.v(javaClass.name, "onCreate")
+        Log.v(TAG, "onCreate")
         arguments?.let {
             if (it.containsKey(ITEM_ID)) {
                 itemId = it.getLong(ITEM_ID)
             }
         }
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.v(javaClass.name, "onCreateView")
+        Log.v(TAG, "onCreateView")
         return inflater.inflate(R.layout.fragment_bug_edit, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.v(javaClass.name, "onActivityCreated")
+        Log.v(TAG, "onActivityCreated")
+
         setupViewModel()
+
         fab.setOnClickListener {
-            Log.v(javaClass.name, "save bug")
+            Log.v(TAG, "save bug")
             val i = bug
             if (i != null) {
                 i.title = title_input.text.toString()
@@ -60,8 +62,9 @@ class BugEditFragment : Fragment() {
                 viewModel.saveOrUpdate(i)
             }
         }
+
         delete_button.setOnClickListener {
-            Log.v(javaClass.name, "delete bug")
+            Log.v(TAG, "delete bug")
             val i = bug
             if (i != null) {
                 viewModel.delete(i)
@@ -73,13 +76,13 @@ class BugEditFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(BugEditViewModel::class.java)
 
         viewModel.fetching.observe(viewLifecycleOwner) { fetching ->
-            Log.v(javaClass.name, "update fetching")
+            Log.v(TAG, "update fetching")
             progress.visibility = if (fetching) View.VISIBLE else View.GONE
         }
 
         viewModel.fetchingError.observe(viewLifecycleOwner) { exception ->
             if(exception != null) {
-                Log.v(javaClass.name, "update fetching error")
+                Log.v(TAG, "update fetching error")
                 val message = "Fetching exception ${exception.message}"
                 val parentActivity = activity?.parent
                 if (parentActivity != null) {
@@ -90,7 +93,7 @@ class BugEditFragment : Fragment() {
 
         viewModel.completed.observe(viewLifecycleOwner) { completed ->
             if (completed) {
-                Log.v(javaClass.name, "completed, navigate back")
+                Log.v(TAG, "completed, navigate back")
                 findNavController().popBackStack()
             }
         }
@@ -98,15 +101,15 @@ class BugEditFragment : Fragment() {
         val id = itemId
 
         if (id == null) {
-            bug = Bug(0, "FirstBug", "Bug description",  Date().toString(), 2, false)
+            bug = Bug(0, "FirstBug", "Bug description",  Date().toString(), 2, false, "")
         } else {
             viewModel.getItemById(id).observe(viewLifecycleOwner) {
-                Log.v(javaClass.name, "update bug")
+                Log.v(TAG, "update bug")
                 bug = it
                 title_input.setText(it.title)
                 description_input.setText(it.description)
                 severity_input.setText(it.severity.toString())
-                reportedDate_input.setText(it.dateReported);
+                reportedDate_input.setText(it.dateReported)
                 solved_checkbox.isChecked = it.solved
             }
         }

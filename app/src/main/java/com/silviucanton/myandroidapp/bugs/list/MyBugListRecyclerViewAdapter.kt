@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.silviucanton.myandroidapp.R
 import com.silviucanton.myandroidapp.bugs.data.Bug
 import com.silviucanton.myandroidapp.bugs.edit.BugEditFragment
+import com.silviucanton.myandroidapp.core.TAG
 import kotlinx.android.synthetic.main.fragment_bug.view.*
 
 
@@ -25,7 +26,7 @@ class MyBugListRecyclerViewAdapter(
             notifyDataSetChanged()
         }
 
-    private var onItemClick: View.OnClickListener;
+    private var onItemClick: View.OnClickListener
 
     init {
         onItemClick = View.OnClickListener { view ->
@@ -39,12 +40,12 @@ class MyBugListRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_bug, parent, false)
-        Log.v(javaClass.name, "onCreateViewHolder")
+        Log.v(TAG, "onCreateViewHolder")
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.v(javaClass.name, "onBindViewHolder $position")
+        Log.v(TAG, "onBindViewHolder $position")
         val item = items[position]
         holder.itemView.tag = item
         holder.textView.text = item.toString()

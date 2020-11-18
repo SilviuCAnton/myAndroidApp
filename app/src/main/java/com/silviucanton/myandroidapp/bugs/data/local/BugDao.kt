@@ -6,8 +6,8 @@ import com.silviucanton.myandroidapp.bugs.data.Bug
 
 @Dao
 interface BugDao {
-    @Query("SELECT * from bugs ORDER BY title ASC")
-    fun getAll(): LiveData<List<Bug>>
+    @Query("SELECT * from bugs WHERE userId=:userId ORDER BY title ASC")
+    fun getAll(userId: String): LiveData<List<Bug>>
 
     @Query("SELECT * FROM bugs WHERE id=:id ")
     fun getById(id: Long): LiveData<Bug>

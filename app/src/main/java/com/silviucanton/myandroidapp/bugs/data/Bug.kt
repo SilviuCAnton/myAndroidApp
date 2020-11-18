@@ -11,7 +11,8 @@ data class Bug(
     @ColumnInfo(name = "description") var description: String,
     @ColumnInfo(name = "dateReported") var dateReported: String,
     @ColumnInfo(name = "severity") var severity: Int,
-    @ColumnInfo(name = "solved") var solved: Boolean
+    @ColumnInfo(name = "solved") var solved: Boolean,
+    @ColumnInfo(name = "userId") var userId: String
 ) {
     override fun toString(): String = "$title $description $dateReported $solved"
 }

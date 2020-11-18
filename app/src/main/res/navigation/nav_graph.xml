@@ -5,6 +5,13 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragment_bug_list">
 
+
+    <fragment
+        android:id="@+id/fragment_login"
+        android:name="com.silviucanton.myandroidapp.auth.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" />
+
     <fragment
         android:id="@+id/fragment_bug_list"
         android:name="com.silviucanton.myandroidapp.bugs.list.BugListFragment"
@@ -14,6 +21,10 @@
         <action
             android:id="@+id/action_BugListFragment_to_BugEditFragment"
             app:destination="@id/fragment_bug_edit" />
+
+        <action
+            android:id="@+id/action_fragment_item_list_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_bug_edit"

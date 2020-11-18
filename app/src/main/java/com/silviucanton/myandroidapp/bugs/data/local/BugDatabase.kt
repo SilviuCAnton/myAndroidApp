@@ -45,14 +45,10 @@ abstract class BugDatabase : RoomDatabase() {
                 super.onOpen(db)
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.bugDao())
+                        print("Database initialized...")
                     }
                 }
             }
-        }
-
-        suspend fun populateDatabase(bugDao: BugDao) {
-            bugDao.deleteAll()
         }
     }
 
